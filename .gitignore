@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.pt
+*.pth
+*.egg-info/
+.env
+*.log
+/models/__pycache__/
+/utils/__pycache__/
