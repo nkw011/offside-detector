@@ -35,7 +35,7 @@ The system automatically:
 ### Setup
 
 ```bash
-git clone https://github.com/<your-username>/offside-detector.git
+git clone https://github.com/nkw011/offside-detector.git
 cd offside-detector
 
 # Create conda environment (recommended)
