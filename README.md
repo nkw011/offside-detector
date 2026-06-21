@@ -26,6 +26,49 @@ The system automatically:
 
 ---
 
+## Quick Test Example
+
+Use any soccer broadcast image. The example below assumes:
+- **White jersey = Attacking team (A)**
+- **Red jersey = Defending team (B)**
+- **Goal on the right side**
+
+### Step-by-step
+
+**Step 1.** Run the app and open `http://localhost:7861`
+
+```bash
+python demo.py
+```
+
+**Step 2.** Upload a soccer image via the left panel.
+
+**Step 3.** Select **"A — 공격팀"** in the team radio button, then click on any **white jersey** player in the image.
+An orange **A** marker will appear on that player.
+
+**Step 4.** Select **"B — 수비팀"**, then click on any **red jersey** player.
+A blue **B** marker will appear.
+
+**Step 5.** Set **골대 방향 → right** (goal is on the right side).
+
+**Step 6.** Press **판독 시작**.
+
+### What happens automatically
+| Step | Model | Output |
+|---|---|---|
+| Player detection | YOLOv8s-pose | Bounding boxes + 17 keypoints for all players |
+| Team assignment | BLIP VQA + k-means | All white jerseys → Team A, all red jerseys → Team B |
+| Offside line | Geometry | Vertical line at the most forward red defender's x-position |
+| Offside judgment | FIFA rule | Most advanced non-arm body part vs. the line |
+| Explanation | Qwen3-VL-8B | 2–3 sentence natural language verdict |
+
+### Expected output
+- **판독 결과** image: annotated with cyan offside line, colored bounding boxes (blue = Team B / defend, red outline = OFFSIDE attacker, cyan = ONSIDE attacker), pose skeletons, and verdict text
+- **공격팀(A) 선수 확대** gallery: zoomed crop of each white-jersey attacker showing pose + OFFSIDE / ONSIDE label
+- **Qwen3-VL-8B** text box: natural language explanation referencing specific player numbers
+
+---
+
 ## Installation
 
 ### Requirements
